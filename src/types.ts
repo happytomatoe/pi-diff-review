@@ -1,4 +1,4 @@
-export type ReviewScope = "git-diff" | "last-commit" | "commit" | "all-files";
+export type ReviewScope = "git-diff" | "last-commit" | "commit" | "all-files" | "branch-vs-base";
 
 export type ChangeStatus = "modified" | "added" | "deleted" | "renamed";
 
@@ -24,8 +24,10 @@ export interface ReviewFile {
   hasWorkingTreeFile: boolean;
   inGitDiff: boolean;
   inLastCommit: boolean;
+  inBranchDiff: boolean;
   gitDiff: ReviewFileComparison | null;
   lastCommit: ReviewFileComparison | null;
+  branchComparison: ReviewFileComparison | null;
   commitComparisons: Record<string, ReviewFileComparison>;
 }
 
@@ -92,4 +94,5 @@ export interface ReviewWindowData {
   repoRoot: string;
   files: ReviewFile[];
   commits: ReviewCommit[];
+  baseBranch: string | null;
 }
