@@ -5,6 +5,7 @@ function formatScopeLabel(scope: ReviewScope): string {
     case "git-diff": return "git diff";
     case "last-commit": return "last commit";
     case "commit": return "commit";
+    case "branch-vs-base": return "branch vs base";
     default: return "all files";
   }
 }
@@ -15,9 +16,11 @@ function getCommentFilePath(file: ReviewFile | undefined, comment: DiffReviewCom
     ? file.gitDiff
     : comment.scope === "last-commit"
       ? file.lastCommit
-      : comment.scope === "commit" && comment.commitSha
-        ? file.commitComparisons[comment.commitSha]
-        : null;
+      : comment.scope === "branch-vs-base"
+        ? file.branchComparison
+        : comment.scope === "commit" && comment.commitSha
+          ? file.commitComparisons[comment.commitSha]
+          : null;
   return comparison?.displayPath ?? file.path;
 }
 
